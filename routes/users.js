@@ -38,15 +38,19 @@ router.post("/", async (request, response) => {
   }
 });
 
-//PUT: Edita um usuário de id específicode id específico
+//PUT: Edita um usuário de id específico
 router.put("/:id", async (request, response) => {
-    try {
-      const user = await User.findById(request.params.id);
-      const saveUser = await user.save();
-      response.json(saveUser);
-    } catch (error) {
-      response.send(`Erro: ${error}`);
-    }
+  try {
+    const updateUser = await User.findByIdAndUpdate(request.params.id, {
+      name: request.body.name, //Nome
+      role: request.body.role, //Papel ou Função
+      age: request.body.age, //Idade
+      isActive: request.body.isActive, //Status do Cadastro
+    });
+    response.json(updateUser);
+  } catch (error) {
+    response.send(`Erro: ${error}`);
+  }
 });
 
 //PATCH: Atualiza o campo isActive. Ex: Mudar o campo isActive para false para desativar cadastro do usuário
@@ -64,8 +68,9 @@ router.patch("/:id", async (request, response) => {
 //DELETE: Remove um usuário de id específico
 router.delete("/:id", async (request, response) => {
   try {
-    const deleteUserById = await User.findById(request.params.id);
-    response.json(deleteUserById);
+    const user = await User.findById(request.params.id);
+    const removeUser = await user.remove();
+    response.json(removeUser);
   } catch (error) {
     response.send(`Erro: ${error}`);
   }
