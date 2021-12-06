@@ -4,7 +4,6 @@ const url = 'mongodb://localhost/web3';
 
 const app = express();
 
-//useNewUrlParser evita um warning {useNewUrlParser: true}
 mongoose.connect(url);
 const connection = mongoose.connection;
 
